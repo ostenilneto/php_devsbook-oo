@@ -1,4 +1,5 @@
 <?php
+session_start();
 $base = 'http://localhost/devsbook-oo';
 
 $db_name = 'devsbook';
