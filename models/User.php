@@ -1,5 +1,5 @@
 <?php
-class Auth {
+class User {
     Public $id ;
     Public $email ;
     Public $password ;
@@ -15,4 +15,6 @@ class Auth {
 
 interface UserDAO {
     public function findByToken($token);
+    public function findByEmail($email);
+    public function update(User $u);
 }
