@@ -1,5 +1,6 @@
 <?php
 require_once 'models/Post.php';
+require_once 'dao/UserRelationDaoMysql.php';
 
 class PostDaoMysql implements PostDAO {
     private $pdo;
@@ -20,7 +21,32 @@ class PostDaoMysql implements PostDAO {
         $sql->bindValue(':created_at', $p->created_at);
         $sql->bindValue(':body', $p->body);
         $sql->execute();
+    }
 
-        return true;
+    public function getHomeFeed($id_user) {
+        $array = [];
+
+        // 1. Lista dos usuarios que o usuario logado segue
+        $urDao = new UserRelationDaoMysql($this->pdo);
+        $userList = $urDao->getRelationsFrom($id_user);
+
+        // 2. Pegar os posts ordenado pela data
+        $sql = $this->pdo->query("SELECT * FROM posts 
+            WHERE id_user IN (".implode(',', $userList).")
+            ORDER BY created_at DESC");
+
+        if($sql->rowCount() > 0) {
+            $data = $sql->fetchAll(PDO::FETCH_ASSOC);
+
+            // 3. Transformar resultado em objetos
+            $array = $this->_postListToObject($data, $id_user);
+
+        }
+
+        return $array;
+    }
+
+    private function _postListToObject($post_list, $id_user) {
+
     }
 }
