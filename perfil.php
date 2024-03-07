@@ -2,7 +2,6 @@
 require 'config.php';
 require 'models/Auth.php';
 require 'dao/PostDaoMysql.php';
-require 'dao/UserDaoMysql.php';
 
 $auth = new Auth($pdo, $base);
 $userInfo = $auth->checkToken();
@@ -17,7 +16,16 @@ $postDao = new PostDaoMysql($pdo);
 $userDao = new UserDaoMysql($pdo);
 
 // Pegar informações do Usuário
+$user = $userDao->findById($id);
+if(!$user) {
+    header("Location: ".$base);
+    exit;
+}
 
+//calculo idade do Usuario
+$dateFrom = new DateTime($user->birthdate);
+$dateTo = new DateTime('today');
+$user->ageYears = $dateFrom->diff($dateTo)->y;
 
 // Pegar o FEED do Usuário
 
@@ -36,14 +44,16 @@ require 'partials/menu.php';
 <div class="row">
     <div class="box flex-1 border-top-flat">
         <div class="box-body">
-            <div class="profile-cover" style="background-image: url('media/covers/cover.jpg');"></div>
+            <div class="profile-cover" style="background-image: url('<?=$base;?>/media/covers/<?=$user->cover;?>');"></div>
             <div class="profile-info m-20 row">
                 <div class="profile-info-avatar">
-                    <img src="media/avatars/avatar.jpg" />
+                    <img src="<?=$base;?>/media/avatars/<?=$user->avatar;?>" />
                 </div>
                 <div class="profile-info-name">
-                    <div class="profile-info-name-text">Bonieky Lacerda</div>
-                    <div class="profile-info-location">Campina Grande</div>
+                    <div class="profile-info-name-text"><?=$user->name;?></div>
+                    <?php if(!empty($user->city)): ?>
+                        <div class="profile-info-location"><?=$user->city;?></div>
+                    <?php endif ;?>
                 </div>
                 <div class="profile-info-data row">
                     <div class="profile-info-item m-width-20">
@@ -72,19 +82,23 @@ require 'partials/menu.php';
             <div class="box-body">
                 
                 <div class="user-info-mini">
-                    <img src="assets/images/calendar.png" />
-                    01/01/1930 (90 anos)
+                    <img src="<?=$base;?>/assets/images/calendar.png" />
+                    <?=date('d/m/Y', strtotime($user->birthdate));?> (<?=$user->ageYears;?> anos)
                 </div>
 
-                <div class="user-info-mini">
-                    <img src="assets/images/pin.png" />
-                    Campina Grande, Brasil
-                </div>
+                <?php if(!empty($user->city)): ?>
+                    <div class="user-info-mini">
+                        <img src="<?=$base;?>/assets/images/pin.png" />
+                        <?=$user->city;?>
+                    </div>
+                <?php endif ;?>
 
-                <div class="user-info-mini">
-                    <img src="assets/images/work.png" />
-                    B7Web
-                </div>
+                <?php if(!empty($user->work)): ?>
+                    <div class="user-info-mini">
+                        <img src="<?=$base;?>/assets/images/work.png" />
+                        <?=$user->work;?>
+                    </div>
+                <?php endif ;?>
 
             </div>
         </div>
@@ -96,15 +110,15 @@ require 'partials/menu.php';
                     <span>(363)</span>
                 </div>
                 <div class="box-header-buttons">
-                    <a href="">ver todos</a>
+                    <a href="<?=$base;?>/">ver todos</a>
                 </div>
             </div>
             <div class="box-body friend-list">
                 
                 <div class="friend-icon">
-                    <a href="">
+                    <a href="<?=$base;?>/">
                         <div class="friend-icon-avatar">
-                            <img src="media/avatars/avatar.jpg" />
+                            <img src="<?=$base;?>/media/avatars/avatar.jpg" />
                         </div>
                         <div class="friend-icon-name">
                             Bonieky
@@ -113,9 +127,9 @@ require 'partials/menu.php';
                 </div>
 
                 <div class="friend-icon">
-                    <a href="">
+                    <a href="<?=$base;?>/">
                         <div class="friend-icon-avatar">
-                            <img src="media/avatars/avatar.jpg" />
+                            <img src="<?=$base;?>/media/avatars/avatar.jpg" />
                         </div>
                         <div class="friend-icon-name">
                             Bonieky
@@ -124,9 +138,9 @@ require 'partials/menu.php';
                 </div>
 
                 <div class="friend-icon">
-                    <a href="">
+                    <a href="<?=$base;?>/">
                         <div class="friend-icon-avatar">
-                            <img src="media/avatars/avatar.jpg" />
+                            <img src="<?=$base;?>/media/avatars/avatar.jpg" />
                         </div>
                         <div class="friend-icon-name">
                             Bonieky
@@ -135,9 +149,9 @@ require 'partials/menu.php';
                 </div>
 
                 <div class="friend-icon">
-                    <a href="">
+                    <a href="<?=$base;?>/">
                         <div class="friend-icon-avatar">
-                            <img src="media/avatars/avatar.jpg" />
+                            <img src="<?=$base;?>/media/avatars/avatar.jpg" />
                         </div>
                         <div class="friend-icon-name">
                             Bonieky
@@ -146,9 +160,9 @@ require 'partials/menu.php';
                 </div>
 
                 <div class="friend-icon">
-                    <a href="">
+                    <a href="<?=$base;?>/">
                         <div class="friend-icon-avatar">
-                            <img src="media/avatars/avatar.jpg" />
+                            <img src="<?=$base;?>/media/avatars/avatar.jpg" />
                         </div>
                         <div class="friend-icon-name">
                             Bonieky
@@ -157,9 +171,9 @@ require 'partials/menu.php';
                 </div>
 
                 <div class="friend-icon">
-                    <a href="">
+                    <a href="<?=$base;?>/">
                         <div class="friend-icon-avatar">
-                            <img src="media/avatars/avatar.jpg" />
+                            <img src="<?=$base;?>/media/avatars/avatar.jpg" />
                         </div>
                         <div class="friend-icon-name">
                             Bonieky
@@ -168,9 +182,9 @@ require 'partials/menu.php';
                 </div>
 
                 <div class="friend-icon">
-                    <a href="">
+                    <a href="<?=$base;?>/">
                         <div class="friend-icon-avatar">
-                            <img src="media/avatars/avatar.jpg" />
+                            <img src="<?=$base;?>/media/avatars/avatar.jpg" />
                         </div>
                         <div class="friend-icon-name">
                             Bonieky
@@ -191,44 +205,44 @@ require 'partials/menu.php';
                     <span>(12)</span>
                 </div>
                 <div class="box-header-buttons">
-                    <a href="">ver todos</a>
+                    <a href="<?=$base;?>/">ver todos</a>
                 </div>
             </div>
             <div class="box-body row m-20">
                 
                 <div class="user-photo-item">
                     <a href="#modal-1" rel="modal:open">
-                        <img src="media/uploads/1.jpg" />
+                        <img src="<?=$base;?>/media/uploads/1.jpg" />
                     </a>
                     <div id="modal-1" style="display:none">
-                        <img src="media/uploads/1.jpg" />
+                        <img src="<?=$base;?>/media/uploads/1.jpg" />
                     </div>
                 </div>
 
                 <div class="user-photo-item">
                     <a href="#modal-2" rel="modal:open">
-                        <img src="media/uploads/1.jpg" />
+                        <img src="<?=$base;?>/media/uploads/1.jpg" />
                     </a>
                     <div id="modal-2" style="display:none">
-                        <img src="media/uploads/1.jpg" />
+                        <img src="<?=$base;?>/media/uploads/1.jpg" />
                     </div>
                 </div>
 
                 <div class="user-photo-item">
                     <a href="#modal-3" rel="modal:open">
-                        <img src="media/uploads/1.jpg" />
+                        <img src="<?=$base;?>/media/uploads/1.jpg" />
                     </a>
                     <div id="modal-3" style="display:none">
-                        <img src="media/uploads/1.jpg" />
+                        <img src="<?=$base;?>/media/uploads/1.jpg" />
                     </div>
                 </div>
 
                 <div class="user-photo-item">
                     <a href="#modal-4" rel="modal:open">
-                        <img src="media/uploads/1.jpg" />
+                        <img src="<?=$base;?>/media/uploads/1.jpg" />
                     </a>
                     <div id="modal-4" style="display:none">
-                        <img src="media/uploads/1.jpg" />
+                        <img src="<?=$base;?>/media/uploads/1.jpg" />
                     </div>
                 </div>
                 
@@ -239,7 +253,7 @@ require 'partials/menu.php';
             <div class="box-body">
                 <div class="feed-item-head row mt-20 m-width-20">
                     <div class="feed-item-head-photo">
-                        <a href=""><img src="media/avatars/avatar.jpg" /></a>
+                        <a href="<?=$base;?>/"><img src="<?=$base;?>/media/avatars/avatar.jpg" /></a>
                     </div>
                     <div class="feed-item-head-info">
                         <a href=""><span class="fidi-name">Bonieky Lacerda</span></a>
