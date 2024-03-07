@@ -40,13 +40,29 @@ class PostDaoMysql implements PostDAO {
 
             // 3. Transformar resultado em objetos
             $array = $this->_postListToObject($data, $id_user);
-
         }
 
         return $array;
     }
 
     private function _postListToObject($post_list, $id_user) {
+        $posts = [];
 
+        foreach($post_list as $post_item) {
+            $newPost = new Post();
+            $newPost->id = $post_item['id'];
+            $newPost->id_user = $post_item['id_user'];
+            $newPost->type = $post_item['type'];
+            $newPost->created_at = $post_item['created_at'];
+            $newPost->body = $post_item['body'];
+
+            if($post_item['id_user'] == $id_user) {
+                
+            }
+
+            $posts[] = $newPost;
+        }
+
+        return $posts;
     }
 }
