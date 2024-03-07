@@ -10,10 +10,6 @@ $activeMenu = 'home';
 $postDao = new PostDaoMysql($pdo);
 $feed = $postDao->getHomeFeed($userInfo->id);
 
-echo '<pre>';
-print_r($feed);
-exit;
-
 require 'partials/header.php';
 require 'partials/menu.php';
 ?>
@@ -21,8 +17,11 @@ require 'partials/menu.php';
     <div class="row">
         <div class="column pr-5">
             <?php require 'partials/feed-editor.php'; ?>
-
-
+            
+            <?php foreach($feed as $item): ?>
+                <?php require 'partials/feed-item.php'; ?>
+            <?php endforeach; ?>
+        
         </div>
         <div class="column side pl-5">
             <div class="box banners">
