@@ -10,6 +10,9 @@ $activeMenu = 'home';
 $postDao = new PostDaoMysql($pdo);
 $feed = $postDao->getHomeFeed($userInfo->id);
 
+echo '<pre>';
+print_r($feed);
+exit;
 
 require 'partials/header.php';
 require 'partials/menu.php';
