@@ -27,9 +27,17 @@ class UserDaoMysql implements UserDAO {
 
             // Followers = Quem segue o usuário
             $u->followers = $urDaoMysql->getFollowers($u->id);
+            foreach($u->followers as $key => $follower_id) {
+                $newUser = $this->findById($follower_id);
+                $u->followers[$key] = $newUser;
+            }
 
             // Following = Quem o usuário, segue 
             $u->following = $urDaoMysql->getFollowing($u->id);
+            foreach($u->following as $key => $follower_id) {
+                $newUser = $this->findById($follower_id);
+                $u->following[$key] = $newUser;
+            }
 
             // Fotos
             $u->photos = [];
@@ -38,6 +46,7 @@ class UserDaoMysql implements UserDAO {
 
         return $u;
     }
+
 
     public function findByToken($token) {
         if(!empty($token)) {
