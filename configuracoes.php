@@ -15,6 +15,12 @@ require 'partials/menu.php';
 <section class="feed mt-10">
 
     <h1>Configurações</h1>
+
+    <?php if(!empty($_SESSION['flash'])): ?>
+        <?=$_SESSION['flash'];?>
+        <?php $_SESSION['flash']= ''?>
+    <?php endif; ?>  
+
     <form method="POST" class="config-form" enctype="multipart/form-data" action="configuracoes_action.php">
         <label>
             Novo Avatar:<br/>

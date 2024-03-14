@@ -16,22 +16,50 @@ $work = filter_input(INPUT_POST, 'work');
 $password = filter_input(INPUT_POST, 'password');
 $password_confirmation = filter_input(INPUT_POST, 'password_confirmation');
 
-if($name && $email /*&& $password && $birthdate*/) {
+if($name && $email) {
     $userInfo->name = $name;
     $userInfo->city = $city;
     $userInfo->work = $work;
 
+    // E-MAIL
     if($userInfo->email != $email) {
         if($userDao->findByEmail($email) === false) {
-            
+            $userInfo->email = $email;
         } else {
             $_SESSION['flash'] = 'E-mail já existe!';
-        }
-
-        //$userInfo->email = $email;
+            header("Location: ".$base."/configuracoes.php");
+            exit;
+        }        
     }
 
-    //$userDao->update($userInfo);
+    // validação de data de nascimento //BIRTHDATE
+    $birthdate = explode('/', $birthdate);
+    if(count($birthdate) != 3) {
+        $_SESSION['flash'] = 'Data de nascimento inválida.';
+        header("Location: ".$base."/configuracoes.php");
+        exit;
+    }
+    $birthdate = $birthdate[2].'-'.$birthdate[1].'-'.$birthdate[0];
+    if(strtotime($birthdate) === false) {
+        $_SESSION['flash'] = 'Data de nascimento inválida.';
+        header("Location: ".$base."/configuracoes.php");
+        exit;
+    }
+    $userInfo->birthdate = $birthdate;
+
+    //PASSWORD
+    if(!empty($password)) {
+        if($password === $password_confirmation) {
+            $hash = password_hash($password, PASSWORD_DEFAULT);
+            $userInfo->password = $hash;
+        } else {
+            $_SESSION['flash'] = 'As senhas não batem';
+            header("Location: ".$base."/configuracoes.php");
+            exit;
+        }
+    }
+
+    $userDao->update($userInfo);
 }
 
 header("Location: ".$base."/configuracoes.php");
