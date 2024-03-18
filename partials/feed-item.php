@@ -35,7 +35,9 @@ require_once 'feed-item-script.php';
             <div class="msg-btn"><?=count($item->comments);?></div>
         </div>
         <div class="feed-item-comments">
-            
+            <div class="feed-item-comments-area">
+
+            </div>
             <div class="fic-answer row m-height-10 m-width-20">
                 <div class="fic-item-photo">
                     <a href="<?=$base;?>/perfil.php"><img src="<?=$base;?>/media/avatars/<?=$userInfo->avatar;?>" /></a>
