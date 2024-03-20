@@ -44,8 +44,8 @@ $user->ageYears = $dateFrom->diff($dateTo)->y;
 // Pegar o FEED do Usuário
 $info = $postDao->getUserFeed($id, $page);
 $feed = $info['feed'];
-//$pages = $info['pages'];
-//$currentPage = $info['currentPage'];
+$pages = $info['pages'];
+$currentPage = $info['currentPage'];
 
 // Verificar se eu SIGO este usuário
 $isFollowing = $userRelationDao->isFollowing($userInfo->id, $id);
