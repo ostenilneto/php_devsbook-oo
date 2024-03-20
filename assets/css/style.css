@@ -247,6 +247,23 @@ header .head-side {
     left: -500px;
     top: -500px;
 }
+
+.feed-pagination a {
+    display: inline-block;
+    padding: 7px 10px;
+    border: 1px solid #CCC;
+    margin: 5px;
+    text-decoration: none;
+    color: #000;
+    border-radius: 3px;
+}
+.feed-pagination a:hover {
+    background-color: #DDD;
+}
+.feed-pagination a.active {
+    background-color: #FFF;
+}
+
 .banners .box-body {
     margin:0 10px 10px 10px;
 }
@@ -368,6 +385,10 @@ header .head-side {
     max-width: 100%;
 }
 
+.full-user-photos .user-photo-item {
+    max-width: 100%;
+}
+
 .tabs {
     border-bottom: 1px solid #c9cacc;
     display: flex;
@@ -404,11 +425,11 @@ header .head-side {
 .config-form {
     margin-top: 10px;
 }
-.config-form label{
+.config-form label {
     display: block;
     padding: 10px 0;
 }
-.config-form input{
+.config-form input {
     font-size: 14px;
     width: 100%;
     max-width: 500px;
@@ -417,7 +438,7 @@ header .head-side {
 .config-form .mini {
     max-height: 100px;
 }
-.button{
+.button {
     border: 0;
     padding: 10px 20px;
     background-color: #4a76a8;
