@@ -1,8 +1,6 @@
 <?php
-// pegar somente o primeiro nome do usuário
 $firstName = current(explode(' ', $userInfo->name));
 ?>
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -15,7 +13,7 @@ $firstName = current(explode(' ', $userInfo->name));
     <header>
         <div class="container">
             <div class="logo">
-                <a href="<?=$base;?>/"><img src="<?=$base;?>/assets/images/devsbook_logo.png" /></a>
+                <a href="<?=$base;?>"><img src="<?=$base;?>/assets/images/devsbook_logo.png" /></a>
             </div>
             <div class="head-side">
                 <div class="head-side-left">
@@ -27,9 +25,9 @@ $firstName = current(explode(' ', $userInfo->name));
                 </div>
                 <div class="head-side-right">
                     <a href="<?=$base;?>/perfil.php" class="user-area">
-                        <div class="user-area-text"><?=$firstName; ?></div>
+                        <div class="user-area-text"><?=$firstName;?></div>
                         <div class="user-area-icon">
-                            <img src="<?=$base;?>/media/avatars/<?=$userInfo->avatar?>" />
+                            <img src="<?=$base;?>/media/avatars/<?=$userInfo->avatar;?>" />
                         </div>
                     </a>
                     <a href="<?=$base;?>/logout.php" class="user-logout">

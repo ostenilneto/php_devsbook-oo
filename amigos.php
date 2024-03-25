@@ -27,13 +27,11 @@ if(!$user) {
     header("Location: ".$base);
     exit;
 }
-
-//calculo idade do Usuario
 $dateFrom = new DateTime($user->birthdate);
 $dateTo = new DateTime('today');
 $user->ageYears = $dateFrom->diff($dateTo)->y;
 
-// Verificar se eu SIGO este Usuário
+// Verificar se eu SIGO este usuário
 
 
 require 'partials/header.php';
@@ -53,7 +51,7 @@ require 'partials/menu.php';
                     <div class="profile-info-name-text"><?=$user->name;?></div>
                     <?php if(!empty($user->city)): ?>
                         <div class="profile-info-location"><?=$user->city;?></div>
-                    <?php endif ;?>
+                    <?php endif; ?>
                 </div>
                 <div class="profile-info-data row">
                     <div class="profile-info-item m-width-20">
@@ -75,58 +73,68 @@ require 'partials/menu.php';
 </div>
 
 <div class="row">
-    <div class="column">
-        <div class="box">
-            <div class="box-body">
-                <div class="tabs">
-                    <div class="tab-item" data-for="followers">
-                        Seguidores
-                    </div>
-                    <div class="tab-item active" data-for="following">
-                        Seguindo
-                    </div>
-                </div>
-                <div class="tab-content">
-                    <div class="tab-body" data-item="followers">
-                        <div class="full-friend-list">
-                            <?php foreach($user->followers as $item): ?>
-                                <div class="friend-icon">
-                                    <a href="<?=$base;?>/perfil.php?id=<?=$item->id?>">
-                                        <div class="friend-icon-avatar">
-                                            <img src="<?=$base;?>/media/avatars/<?=$item->avatar;?>" />
-                                        </div>
-                                        <div class="friend-icon-name">
-                                            <?=$item->name;?>
-                                        </div>
-                                    </a>
+
+<div class="column">
+                    
+                    <div class="box">
+                        <div class="box-body">
+
+                            <div class="tabs">
+                                <div class="tab-item" data-for="followers">
+                                    Seguidores
                                 </div>
-                            <?php endforeach; ?>
+                                <div class="tab-item active" data-for="following">
+                                    Seguindo
+                                </div>
+                            </div>
+                            <div class="tab-content">
+                                <div class="tab-body" data-item="followers">
+                                    
+                                    <div class="full-friend-list">
+
+                                        <?php foreach($user->followers as $item): ?>
+                                            <div class="friend-icon">
+                                                <a href="<?=$base;?>/perfil.php?id=<?=$item->id;?>">
+                                                    <div class="friend-icon-avatar">
+                                                        <img src="<?=$base;?>/media/avatars/<?=$item->avatar;?>" />
+                                                    </div>
+                                                    <div class="friend-icon-name">
+                                                        <?=$item->name;?>
+                                                    </div>
+                                                </a>
+                                            </div>
+                                        <?php endforeach; ?>
+
+                                    </div>
+
+                                </div>
+                                <div class="tab-body" data-item="following">
+                                    
+                                    <div class="full-friend-list">
+                                        <?php foreach($user->following as $item): ?>
+                                            <div class="friend-icon">
+                                                <a href="<?=$base;?>/perfil.php?id=<?=$item->id;?>">
+                                                    <div class="friend-icon-avatar">
+                                                        <img src="<?=$base;?>/media/avatars/<?=$item->avatar;?>" />
+                                                    </div>
+                                                    <div class="friend-icon-name">
+                                                        <?=$item->name;?>
+                                                    </div>
+                                                </a>
+                                            </div>
+                                        <?php endforeach; ?>
+                                    </div>
+
+                                </div>
+                            </div>
+
                         </div>
                     </div>
-                    <div class="tab-body" data-item="following">                        
-                        <div class="full-friend-list">
-                            <?php foreach($user->following as $item): ?>
-                                <div class="friend-icon">
-                                    <a href="<?=$base;?>/perfil.php?id=<?=$item->id?>">
-                                        <div class="friend-icon-avatar">
-                                            <img src="<?=$base;?>/media/avatars/<?=$item->avatar;?>" />
-                                        </div>
-                                        <div class="friend-icon-name">
-                                            <?=$item->name;?>
-                                        </div>
-                                    </a>
-                                </div>
-                            <?php endforeach; ?>
-                        </div>
 
-                    </div>
                 </div>
-
-            </div>
-        </div>
-
-    </div> 
+    
 </div>
+
 </section>
 <?php
 require 'partials/footer.php';

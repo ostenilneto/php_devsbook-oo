@@ -24,11 +24,13 @@ require 'partials/menu.php';
 <section class="feed mt-10">
     <div class="row">
         <div class="column pr-5">
-            <h3>Pesquisa por: <?=$searchTerm;?></h3>
+            
+            <h2>Pesquisa por: <?=$searchTerm;?></h2>
+
             <div class="full-friend-list">
                 <?php foreach($userList as $item): ?>
                     <div class="friend-icon">
-                        <a href="<?=$base;?>/perfil.php?id=<?=$item->id?>">
+                        <a href="<?=$base;?>/perfil.php?id=<?=$item->id;?>">
                             <div class="friend-icon-avatar">
                                 <img src="<?=$base;?>/media/avatars/<?=$item->avatar;?>" />
                             </div>
@@ -39,16 +41,19 @@ require 'partials/menu.php';
                     </div>
                 <?php endforeach; ?>
             </div>
+            
         </div>
         <div class="column side pl-5">
             <div class="box banners">
                 <div class="box-header">
                     <div class="box-header-text">Patrocinios</div>
-                    <div class="box-header-buttons"></div>
+                    <div class="box-header-buttons">
+                        
+                    </div>
                 </div>
                 <div class="box-body">
-                    <a href=""><img src="https://alunos.b7web.com.br/media/courses/php.jpg" /></a>
-                    <a href=""><img src="https://alunos.b7web.com.br/media/courses/laravel.jpg" /></a>
+                    <a href=""><img src="https://alunos.b7web.com.br/media/courses/php-nivel-1.jpg" /></a>
+                    <a href=""><img src="https://alunos.b7web.com.br/media/courses/laravel-nivel-1.jpg" /></a>
                 </div>
             </div>
             <div class="box">

@@ -1,15 +1,13 @@
 <?php
-// pegar somente o primeiro nome do usuário
 $firstName = current(explode(' ', $userInfo->name));
 ?>
-
 <div class="box feed-new">
     <div class="box-body">
         <div class="feed-new-editor m-10 row">
             <div class="feed-new-avatar">
-                <img src="<?=$base;?>/media/avatars/<?=$userInfo->avatar?>" />
+                <img src="<?=$base;?>/media/avatars/<?=$userInfo->avatar;?>" />
             </div>
-            <div class="feed-new-input-placeholder">O que você está pensando, <?=$firstName; ?>?</div>
+            <div class="feed-new-input-placeholder">O que você está pensando, <?=$firstName;?>?</div>
             <div class="feed-new-input" contenteditable="true"></div>
             <div class="feed-new-photo">
                 <img src="<?=$base;?>/assets/images/photo.png" />
@@ -21,6 +19,7 @@ $firstName = current(explode(' ', $userInfo->name));
             <form class="feed-new-form" method="POST" action="<?=$base;?>/feed_editor_action.php">
                 <input type="hidden" name="body" />
             </form>
+            
         </div>
     </div>
 </div>

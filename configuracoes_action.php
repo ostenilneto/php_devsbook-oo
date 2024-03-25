@@ -29,31 +29,31 @@ if($name && $email) {
             $_SESSION['flash'] = 'E-mail já existe!';
             header("Location: ".$base."/configuracoes.php");
             exit;
-        }        
+        }
     }
 
-    // validação de data de nascimento //BIRTHDATE
+    // BIRTHDATE
     $birthdate = explode('/', $birthdate);
     if(count($birthdate) != 3) {
-        $_SESSION['flash'] = 'Data de nascimento inválida.';
+        $_SESSION['flash'] = 'Data de nascimento inválida';
         header("Location: ".$base."/configuracoes.php");
         exit;
     }
     $birthdate = $birthdate[2].'-'.$birthdate[1].'-'.$birthdate[0];
     if(strtotime($birthdate) === false) {
-        $_SESSION['flash'] = 'Data de nascimento inválida.';
+        $_SESSION['flash'] = 'Data de nascimento inválida';
         header("Location: ".$base."/configuracoes.php");
         exit;
     }
     $userInfo->birthdate = $birthdate;
 
-    //PASSWORD
+    // PASSWORD
     if(!empty($password)) {
         if($password === $password_confirmation) {
             $hash = password_hash($password, PASSWORD_DEFAULT);
             $userInfo->password = $hash;
         } else {
-            $_SESSION['flash'] = 'As senhas não batem';
+            $_SESSION['flash'] = 'As senhas não batem.';
             header("Location: ".$base."/configuracoes.php");
             exit;
         }
@@ -106,7 +106,6 @@ if($name && $email) {
 
             $userInfo->avatar = $avatarName;
         }
-
     }
 
     // COVER
@@ -115,7 +114,7 @@ if($name && $email) {
 
         if(in_array($newCover['type'], ['image/jpeg', 'image/jpg', 'image/png'])) {
             $coverWidth = 850;
-            $coverHeight = 313;
+            $coverHeight = 310;
 
             list($widthOrig, $heightOrig) = getimagesize($newCover['tmp_name']);
             $ratio = $widthOrig / $heightOrig;
@@ -156,9 +155,8 @@ if($name && $email) {
 
             $userInfo->cover = $coverName;
         }
-
     }
-    
+
     $userDao->update($userInfo);
 }
 

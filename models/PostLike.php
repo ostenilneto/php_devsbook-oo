@@ -1,10 +1,9 @@
 <?php
 class PostLike {
-    Public $id;
-    Public $id_post; 
-    Public $id_user;    
-    Public $created_at;
-
+    public $id;
+    public $id_post;
+    public $id_user;
+    public $created_at;
 }
 
 interface PostLikeDAO {

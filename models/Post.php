@@ -1,11 +1,10 @@
 <?php
 class Post {
-    Public $id ;
-    Public $id_user ;
-    Public $type ; // text ou photo
-    Public $created_at ;
-    Public $body ;
-
+    public $id;
+    public $id_user;
+    public $type; // text / photo
+    public $created_at;
+    public $body;
 }
 
 interface PostDAO {
